@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciallo～(∠・ω< )⌒★</title>
+    <style>
+		body {
+			overflow: hidden;
+			cursor: url(cursor.cur),auto;
+		}
+		
+        #container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+		
+		/*  点击效果  */
+        .ciallo {
+            position: absolute;
+            padding: 5px 10px;
+            color: black;
+            font-size: 16px;
+            border-radius: 5px;
+            opacity: 1;
+			user-select: none;
+            animation: moveUp 2s forwards, fadeOut 2s forwards;
+        }
+
+        @keyframes moveUp {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-50px);
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+		
+		/*  弹幕效果  */
+        .danmaku {
+            position: absolute;
+            white-space: nowrap;
+            font-size: 20px;
+            color: #ff0;
+            opacity: 1;
+            animation: moveDanmaku 20s linear forwards;
+			user-select: none;
+        }
+
+        @keyframes moveDanmaku {
+            0% {
+                transform: translateX(400%); /* 从右侧开始 */
+            }
+            100% {
+                transform: translateX(-400%); /* 向左滚动至完全消失 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- 内容 -->
+    </div>
+
+    <script>
+        // 随机生成颜色的函数
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // 弹幕显示
+        function createDanmaku() {
+		    const danmakuTexts = [
+				'Ciallo～(∠・ω< )⌒★',
+			];
+			const randomText = danmakuTexts[Math.floor(Math.random() * danmakuTexts.length)];
+            var danmaku = document.createElement('div');
+            danmaku.classList.add('danmaku');
+            danmaku.textContent = randomText;
+            
+            // 随机字体大小
+            const fontSize = Math.floor(Math.random() * 25) + 15;  // 随机字体大小 15px 到 30px
+            danmaku.style.fontSize = `${fontSize}px`;
+			
+            // 设置随机颜色
+            const color = getRandomColor();
+            danmaku.style.color = color;
+			
+            // 随机纵向位置
+			const topPosition = Math.floor(Math.random() * window.innerHeight);
+            danmaku.style.top = `${topPosition}px`;
+
+            // 随机动画速度
+            const animationDuration = Math.floor(Math.random() * 20) + 5; // 5s 到 15s 随机时间
+            danmaku.style.animationDuration = `${animationDuration}s`;
+
+            document.body.appendChild(danmaku);
+
+            // 动态设置动画：每次通过JavaScript随机生成
+            danmaku.style.animationName = 'moveDanmaku';
+			
+            // 动画结束后移除弹幕
+            setTimeout(function() {
+                danmaku.remove();
+            }, 8000);  // 动画时间
+        }
+
+        // 每 1 到 3 秒生成一个新的弹幕
+        setInterval(createDanmaku, Math.floor(Math.random() * 1000) + 500); // 1000 到 3000 毫秒之间
+
+        document.body.addEventListener('click', function(e) {
+            // 创建并显示气泡
+            var ciallo = document.createElement('div');
+            ciallo.classList.add('ciallo');
+            ciallo.textContent = 'Ciallo～(∠・ω< )⌒★';
+            
+            // 设置点击位置
+            ciallo.style.left = `${e.pageX - 30}px`;
+            ciallo.style.top = `${e.pageY - 20}px`;
+
+            // 设置随机颜色
+            ciallo.style.color = getRandomColor();
+
+            document.body.appendChild(ciallo);
+            
+            // 播放音乐
+            var audio = new Audio('ciallo.aac');  // 替换成你自己的音乐链接
+            audio.play();
+            
+            // 动画完成后移除元素
+            setTimeout(function() {
+                ciallo.remove();
+            }, 2000);  // 动画时间
+
+            // 每次点击时创建弹幕
+            createDanmaku();
+        });
+    </script>
+</body>
+</html>
