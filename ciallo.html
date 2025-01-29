@@ -122,8 +122,7 @@
             }, 8000);  // 动画时间
         }
 
-        // 每 1 到 3 秒生成一个新的弹幕
-        setInterval(createDanmaku, Math.floor(Math.random() * 1000) + 500); // 1000 到 3000 毫秒之间
+        setInterval(createDanmaku, Math.floor(Math.random() * 100) + 50);
 
         document.body.addEventListener('click', function(e) {
             // 创建并显示气泡
@@ -141,7 +140,7 @@
             document.body.appendChild(ciallo);
             
             // 播放音乐
-            var audio = new Audio('ciallo.aac');  // 替换成你自己的音乐链接
+            var audio = new Audio('ciallo.aac');
             audio.play();
             
             // 动画完成后移除元素
